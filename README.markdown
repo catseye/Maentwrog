@@ -35,43 +35,39 @@ these words are executed depends on the character they begin with.
 Additionally, words (except number words) can take one of a list of
 prefixes, changing how the word is executed.
 
-  ------------ -------------------- ------------- --------------------------------------------------------------------------------------------------------------------
-  **Prefix**   **Action**           **Example**   **Result**
-  `=`          Assign to variable   `=foo`        A value popped from the stack is assigned to the variable *foo*.
-  `@`          If                   `@bye`        Pop value, stop the program (see predefined words) if it isn't 0.
-  `[`          While                `[xyz`        Pop value, if it's not 0 execute word *xyz*, then pop another value and do it again; continue until a 0 is popped.
-  `$`          Repeat               `$.`          Pop value, then output that many values from the stack.
-  ------------ -------------------- ------------- --------------------------------------------------------------------------------------------------------------------
+    **Prefix**   **Action**           **Example**   **Result**
+    `=`          Assign to variable   `=foo`        A value popped from the stack is assigned to the variable *foo*.
+    `@`          If                   `@bye`        Pop value, stop the program (see predefined words) if it isn't 0.
+    `[`          While                `[xyz`        Pop value, if it's not 0 execute word *xyz*, then pop another value and do it again; continue until a 0 is popped.
+    `$`          Repeat               `$.`          Pop value, then output that many values from the stack.
 
 ### Predefined words
 
-  -------------------- ------------------ ----------------------------------------------------------------
-  **Word**             **Stack effect**   **Description**
-  `bye`                                   Stop program immediately.
-  `rem` ... `;`                           Comment. (Ignore all words between `rem` and `;`.)
-  `:` *word* ... `;`                      Define a new word.
-  `debug`                                 Turn on debugging (outputs all words executed).
-  `vars`                                  Output a list of currently defined variables and their values.
-  `words`                                 Output a list of currently defined words.
-  `alloc`              `n` | `ptr`        Allocate memory for *n* C *long*s, returns a pointer.
-  `free`               `ptr` | `-`        Free memory at pointer.
-  `size`               `-` | `n`          Push stack size.
-  `dup`                `a` | `a a`        Duplicate top of stack.
-  `swap`               `a b` | `b a`      Swap the two topmost stack values.
-  `pop`                `a` | `-`          Remove top value from stack.
-  `get`                `ptr` | `value`    Push value at pointer to stack (C `*ptr`).
-  `put`                `ptr val` | `-`    Store value at pointer (C `*ptr = val`).
-  `rnd`                `-` | `n`          Push random value.
-  `>`                  `a b` | `(a>b)`    Push 1 if a is greater than b, else 0.
-  `<`                  `a b` | `(a<b)`    Push 1 if a is less than b, else 0.
-  `==`                 undefined          Undefined.
-  `.`                  `n` | `-`          Pop a value, output as integer, adding a newline.
-  `..`                 `n` | `-`          Pop a value, output as an ASCII character.
-  `mod`                `a b` | `(a%b)`    Modulo.
-  `+`                  `a b` | `(a+b)`    Addition.
-  `-`                  `a b` | `(a-b)`    Subtraction.
-  `*`                  `a b` | `(a*b)`    Multiplication.
-  `/`                  `a b` | `(a/b)`    Division, result is rounded towards 0.
-  -------------------- ------------------ ----------------------------------------------------------------
+    **Word**             **Stack effect**   **Description**
+    `bye`                                   Stop program immediately.
+    `rem` ... `;`                           Comment. (Ignore all words between `rem` and `;`.)
+    `:` *word* ... `;`                      Define a new word.
+    `debug`                                 Turn on debugging (outputs all words executed).
+    `vars`                                  Output a list of currently defined variables and their values.
+    `words`                                 Output a list of currently defined words.
+    `alloc`              `n` | `ptr`        Allocate memory for *n* C *long*s, returns a pointer.
+    `free`               `ptr` | `-`        Free memory at pointer.
+    `size`               `-` | `n`          Push stack size.
+    `dup`                `a` | `a a`        Duplicate top of stack.
+    `swap`               `a b` | `b a`      Swap the two topmost stack values.
+    `pop`                `a` | `-`          Remove top value from stack.
+    `get`                `ptr` | `value`    Push value at pointer to stack (C `*ptr`).
+    `put`                `ptr val` | `-`    Store value at pointer (C `*ptr = val`).
+    `rnd`                `-` | `n`          Push random value.
+    `>`                  `a b` | `(a>b)`    Push 1 if a is greater than b, else 0.
+    `<`                  `a b` | `(a<b)`    Push 1 if a is less than b, else 0.
+    `==`                 undefined          Undefined.
+    `.`                  `n` | `-`          Pop a value, output as integer, adding a newline.
+    `..`                 `n` | `-`          Pop a value, output as an ASCII character.
+    `mod`                `a b` | `(a%b)`    Modulo.
+    `+`                  `a b` | `(a+b)`    Addition.
+    `-`                  `a b` | `(a-b)`    Subtraction.
+    `*`                  `a b` | `(a*b)`    Multiplication.
+    `/`                  `a b` | `(a/b)`    Division, result is rounded towards 0.
 
 
