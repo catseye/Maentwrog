@@ -1,0 +1,18 @@
+rem array functions ;
+: dim 2 * alloc ;
+: idx 8 * + ;
+rem equality ;
+: eq2 pop 0 ;
+: eq - 1 swap @eq2 ;
+rem test each element in the array ;
+: walkarr2 i 1 + =i i cursz < @walkarr1 ;
+: walkarr1 curn arr i idx get mod 0 eq =fd fd 0 eq @walkarr2 ;
+: walkarr 0 dup =i =fd walkarr1 ;
+rem implementation of algorithm ;
+: sieve2 arr cursz idx curn put curn . cursz 1 + =cursz ;
+: sieve1 walkarr fd 0 eq @sieve2 curn 1 + =curn cursz maxsz < @sieve1 ;
+: sieve *i *fd *curn *cursz 2 . arr 2 put 3 =curn 1 =cursz sieve1 ;
+rem memory handling ;
+: primes *arr *maxsz dup =maxsz dim =arr sieve arr free ;
+rem change the number to change the amount of primes ;
+25 primes

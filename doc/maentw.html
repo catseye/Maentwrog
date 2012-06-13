@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>The Maentwrog Programming Language</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <!-- begin html doc dynamic markup -->
+  <script type="text/javascript" src="/contrib/jquery-1.6.4.min.js"></script>
+  <script type="text/javascript" src="/scripts/documentation.js"></script>
+  <!-- end html doc dynamic markup -->
+</head>
+<body>
+
+<h1>The Maentwrog Programming Language</h1>
+
+<p>This is a rudimentary specification for the Maentwrog programming language.</p>
+
+<p>This information, and the example programs in this distribution, were taken
+from the esolangs.org wiki page for Maentwrog, written by User:Marinus and
+(like all esowiki articles) placed in the public domain.  Thanks Marinus!</p>
+
+<h2>Syntax</h2>
+
+<p>A Maentwrog program consists of a series of words, separated by whitespace. Words can contain any character except whitespace.
+The way these words are executed depends on the character they begin with.</p>
+
+<ul>
+<li>A word that consists of digits is taken as an integer and pushed. A minus sign
+may be used to make negative numbers, so <code>25</code> and <code>-14</code> are
+words that push 25 and -14 onto the stack. Extra characters at the end of the word are allowed,
+so <code>25abc</code> and <code>25.14</code> both also push 25. </li>
+<li>A word that isn't a number is treated as either a function or a variable. If the word is defined as a function, it is executed; if it's a variable,
+its current value is pushed to the stack. Using an undefined word results in an error, though this doesn't stop further execution of the program. </li>
+<li>To define a word as a function, use the syntax <code>: new-word words to execute ;</code> (as in Forth). Redefining a word is not allowed,
+and neither are nested function definitions. </li>
+<li>To define a word as a variable, use the syntax <code>*varname</code>. This must be done before using a variable. </li>
+</ul>
+
+<p>Additionally, words (except number words) can take one of a list of prefixes, changing how the word is executed.</p>
+
+<table>
+<tr>
+<td> <b>Prefix</b> </td><td> <b>Action</b> </td><td> <b>Example</b> </td><td> <b>Result</b>
+</td></tr>
+<tr>
+<td> <code>=</code> </td><td> Assign to variable </td><td> <code>=foo</code> </td><td> A value popped from the stack is assigned to the variable <i>foo</i>.
+</td></tr>
+<tr>
+<td> <code>@</code> </td><td> If </td><td> <code>@bye</code> </td><td> Pop value, stop the program (see predefined words) if it isn't 0.
+</td></tr>
+<tr>
+<td> <code>[</code> </td><td> While </td><td> <code>[xyz</code> </td><td> Pop value, if it's not 0 execute word <i>xyz</i>, then pop another value and do it again; continue until a 0 is popped.
+</td></tr>
+<tr>
+<td> <code>$</code> </td><td> Repeat </td><td> <code>$.</code> </td><td> Pop value, then output that many values from the stack.
+</td></tr></table>
+
+<h3>Predefined words</h3>
+
+<table>
+<tr>
+<td> <b>Word</b> </td><td> <b>Stack effect</b> </td><td> <b>Description</b>
+</td></tr>
+<tr>
+<td> <code>bye</code> </td><td> </td><td> Stop program immediately.
+</td></tr>
+<tr>
+<td> <code>rem</code> ... <code>;</code> </td><td> </td><td> Comment. (Ignore all words between <code>rem</code> and <code>;</code>.)
+</td></tr>
+<tr>
+<td> <code>:</code> <i>word</i> ... <code>;</code> </td><td> </td><td> Define a new word.
+</td></tr>
+<tr>
+<td> <code>debug</code> </td><td> </td><td> Turn on debugging (outputs all words executed).
+</td></tr>
+<tr>
+<td> <code>vars</code> </td><td> </td><td> Output a list of currently defined variables and their values.
+</td></tr>
+<tr>
+<td> <code>words</code> </td><td> </td><td> Output a list of currently defined words.
+</td></tr>
+<tr>
+<td> <code>alloc</code> </td><td> <code>n</code> | <code>ptr</code> </td><td> Allocate memory for <i>n</i> C <i>long</i>s, returns a pointer.
+</td></tr>
+<tr>
+<td> <code>free</code> </td><td> <code>ptr</code> | <code>-</code> </td><td> Free memory at pointer.
+</td></tr>
+<tr>
+<td> <code>size</code> </td><td> <code>-</code> | <code>n</code> </td><td> Push stack size.
+</td></tr>
+<tr>
+<td> <code>dup</code> </td><td> <code>a</code> | <code>a a</code> </td><td> Duplicate top of stack.
+</td></tr>
+<tr>
+<td> <code>swap</code> </td><td> <code>a b</code> | <code>b a</code> </td><td> Swap the two topmost stack values.
+</td></tr>
+<tr>
+<td> <code>pop</code> </td><td> <code>a</code> | <code>-</code> </td><td> Remove top value from stack.
+</td></tr>
+<tr>
+<td> <code>get</code> </td><td> <code>ptr</code> | <code>value</code> </td><td> Push value at pointer to stack (C <code>*ptr</code>).
+</td></tr>
+<tr>
+<td> <code>put</code> </td><td> <code>ptr val</code> | <code>-</code> </td><td> Store value at pointer (C <code>*ptr = val</code>).
+</td></tr>
+<tr>
+<td> <code>rnd</code> </td><td> <code>-</code> | <code>n</code> </td><td> Push random value.
+</td></tr>
+<tr>
+<td> <code>&gt;</code> </td><td> <code>a b</code> | <code>(a&gt;b)</code> </td><td> Push 1 if a is greater than b, else 0.
+</td></tr>
+<tr>
+<td> <code>&lt;</code> </td><td> <code>a b</code> | <code>(a&lt;b)</code> </td><td> Push 1 if a is less than b, else 0.
+</td></tr>
+<tr>
+<td> <code>==</code> </td><td> undefined </td><td> Undefined.
+</td></tr>
+<tr>
+<td> <code>.</code> </td><td> <code>n</code> | <code>-</code> </td><td> Pop a value, output as integer, adding a newline.
+</td></tr>
+<tr>
+<td> <code>..</code> </td><td> <code>n</code> | <code>-</code> </td><td> Pop a value, output as an ASCII character.
+</td></tr>
+<tr>
+<td> <code>mod</code> </td><td> <code>a b</code> | <code>(a%b)</code> </td><td> Modulo.
+</td></tr>
+<tr>
+<td> <code>+</code> </td><td> <code>a b</code> | <code>(a+b)</code> </td><td> Addition.
+</td></tr>
+<tr>
+<td> <code>-</code> </td><td> <code>a b</code> | <code>(a-b)</code> </td><td> Subtraction.
+</td></tr>
+<tr>
+<td> <code>*</code> </td><td> <code>a b</code> | <code>(a*b)</code> </td><td> Multiplication.
+</td></tr>
+<tr>
+<td> <code>/</code> </td><td> <code>a b</code> | <code>(a/b)</code> </td><td> Division, result is rounded towards 0.
+</td></tr></table>
+
+</body>
+</html>

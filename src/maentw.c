@@ -6,6 +6,7 @@
  * - updated Jul 1997 Chris Pressey, fixed minor bugs
  * - updated Jul 1998 Chris Pressey, fixed more minor bugs
  * -         and ANSI C-ized: now case sensitive
+ * - updated Jul 2010 Chris Pressey, buildability w/gcc & pcc
  * Usage : maentw maentw-expressions   executes and exits
  *         maentw		       goes into interactive mode
  *         maentw <maentwrog-file      runs file through maentw
@@ -14,7 +15,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <alloc.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -70,14 +70,6 @@ signed long sizestack(void);
 /* parsing and interpreting */
 void process(char *s);
 void procstr(char *s);
-
-char * strdup(char * s)
-{
-  char * t;
-  t = (char *)malloc(strlen(s) * sizeof(char));
-  strcpy(t, s);
-  return t;
-}
 
 int main(argc, argv)
   int argc;

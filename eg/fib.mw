@@ -1,0 +1,4 @@
+*a *b *c
+0 =a 1 =b
+: fib a b + =c c . b =a c =b c 100000 < @fib ;
+1 . fib
