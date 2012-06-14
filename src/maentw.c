@@ -174,7 +174,7 @@ void process(char *s)
  */
 void procstr(char *s)
 {
-  char *h=strdup(s);
+  char *h=(char *)strdup(s);
   char *g, *gg;
   g = h;
 
@@ -212,7 +212,7 @@ struct word *addword(char *name, char *macro, int fcn)
     }
   new = (struct word *) malloc(sizeof(struct word));
   strcpy(new->name, name);
-  new->macro = strdup(macro);
+  new->macro = (char *)strdup(macro);
   new->fcn = fcn;
 
   new->next = whead;

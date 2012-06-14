@@ -134,7 +134,7 @@ void process(char *s)
  */
 void procstr(char *s)
 {
-  char *h=strdup(s);
+  char *h=(char *)strdup(s);
   char *g;
   g = strtok(h, " ");
   while (g)
