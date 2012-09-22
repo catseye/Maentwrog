@@ -13,6 +13,8 @@
  * xor          ^
  * values       a, b, c, ... z
  * parenthesis  (, )
+ *
+ * This work is in the public domain.  See the file UNLICENSE for more info.
  */
 
 #define OP_OR   0

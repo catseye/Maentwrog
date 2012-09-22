@@ -11,6 +11,7 @@
  *         maentw		       goes into interactive mode
  *         maentw <maentwrog-file      runs file through maentw
  *
+ * This work is in the public domain.  See the file UNLICENSE for more info.
  */
 
 #include <stdio.h>

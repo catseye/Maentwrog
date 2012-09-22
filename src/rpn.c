@@ -12,6 +12,7 @@
  * To do : add size (size stack), sum (sum stack), mean (mean stack), sd (take
  * standard deviation of stack)
  * 
+ * This work is in the public domain.  See the file UNLICENSE for more info.
  */
 
 #include <stdio.h>

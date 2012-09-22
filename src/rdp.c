@@ -10,6 +10,8 @@
    go in the general case.  It should be no problem adapting it
    to do all sorts of really demented things.
 
+   This work is in the public domain.  See the file UNLICENSE for more info.
+
  */
 
 #define THIS_PROGRAM_IS_NOT_REALLY_AS_CRAPPY_AS_YOU_THINK
