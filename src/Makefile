@@ -12,7 +12,7 @@ caparse: caparse.c
 	$(CC) $(CFLAGS) caparse.c -o caparse
 
 rpn: rpn.c
-	$(CC) $(CFLAGS) rpn.c -o rpn
+	$(CC) $(CFLAGS) rpn.c -lm -o rpn
 
 rdp: rdp.c
 	$(CC) $(CFLAGS) rdp.c -o rdp
