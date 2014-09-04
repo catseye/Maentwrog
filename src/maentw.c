@@ -48,7 +48,7 @@ int debug=0;
 /* prototypes */
 
 /* word-handling */
-struct word *addword(char *name, char *macro, int fcn);
+struct word *addword(const char *name, const char *macro, int fcn);
 struct word *lookup(char *name);
 void initwords(void);
 void makeword(void);
@@ -71,6 +71,9 @@ signed long sizestack(void);
 /* parsing and interpreting */
 void process(char *s);
 void procstr(char *s);
+
+/* entry point */
+int main(int, char **);
 
 int main(argc, argv)
   int argc;
@@ -141,13 +144,13 @@ void process(char *s)
   else if (s[0] == '@')
   {
     if (pop())
-      if (w = lookup(s + 1))
+      if ((w = lookup(s + 1)))
 	dofunc(w);
   }
   else if (s[0] == '$')
   {
     for(i=pop();i;i--)
-      if (w = lookup(s + 1))
+      if ((w = lookup(s + 1)))
 	dofunc(w);
   }
   else if (s[0] == '[')
@@ -156,14 +159,14 @@ void process(char *s)
     {
       if (pop())
       {
-	if (w = lookup(s + 1))
+	if ((w = lookup(s + 1)))
 	  dofunc(w);
       } else break;
     }
   }
-  else if (w = lookup(s))
+  else if ((w = lookup(s)))
     dofunc(w);
-  else if (v = getvari(s))
+  else if ((v = getvari(s)))
     push(v->value);
   else
     printf("unknown command '%s'\n", s);
@@ -202,7 +205,7 @@ void procstr(char *s)
 /*
  * adds a unique word to the list of words.
  */
-struct word *addword(char *name, char *macro, int fcn)
+struct word *addword(const char *name, const char *macro, int fcn)
 {
   struct word *new;
   for (new = whead; new; new = new->next)
@@ -293,7 +296,7 @@ void makeword()
   char s[80];
   char t[80];
   char *y;
-  int size = DEFSIZE;
+  unsigned int size = DEFSIZE;
 
   y = (char *)malloc(size);
   scanf("%s", s);

@@ -9,9 +9,9 @@ WARNS=	-W -Wall -Wstrict-prototypes -Wmissing-prototypes \
 	-Winline -Wnested-externs -Wredundant-decls
 
 ifdef ANSI
-  CFLAGS+= -ansi -pedantic
+  CFLAGS+= -ansi -pedantic -D_BSD_SOURCE
 else
-  CFLAGS+= -std=c99 -D_POSIX_C_SOURCE=200112L
+  CFLAGS+= -std=c99 -D_POSIX_C_SOURCE=200809L
 endif
 
 CFLAGS+= ${WARNS} ${EXTRA_CFLAGS}

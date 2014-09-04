@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -24,21 +25,23 @@
 int caparse(char *string, int values[]);
 int doper(int state, int oper, int modder);
 
-main()
+int main(int argc, char **argv)
 {
   int values[26] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                      0, 0, 0, 0, 0, 0, 0, 0, 0 };
   char in[255];
 
+  argc = argc;
+  argv = argv;
   while (!feof(stdin))
   {
-    gets(in);
+    fgets(in, 255, stdin);
     if (isalpha(in[0])&&in[1]=='=')
       values[in[0]-'a']=(in[2]-'0');
       else
       printf("%d\n", caparse(in, values));
   }
-
+  return 0;
 }
 
 int caparse(char *string, int values[])
@@ -93,5 +96,6 @@ int doper(int state, int oper, int modder)
     case OP_AND : return(state & modder); break;
     case OP_XOR : return(state ^ modder); break;
   }
+  exit(1);
 }
 

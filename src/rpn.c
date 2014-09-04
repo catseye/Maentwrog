@@ -46,10 +46,10 @@ struct vari			/* variable structure, for variables */
 /* prototypes */
 
 /* word-handling */
-struct word *addword(char *name, char *macro, int fcn);
+struct word *addword(const char *name, const char *macro, int fcn);
 struct word *lookup(char *name);
-void initwords();
-void makeword();
+void initwords(void);
+void makeword(void);
 
 /* variable-handling */
 struct vari *addvari(char *name);
@@ -58,20 +58,23 @@ void setvari(char *name, double value);
 
 /* stack-handling */
 void push(double val);
-double pop();
+double pop(void);
 
 /* functions */
 void dofunc(struct word * w);
 double factorial(double p);
 double fibonacci(double p);
-void words();
-void vars();
+void words(void);
+void vars(void);
 
 /* parsing and interpreting */
 void process(char *s);
 void procstr(char *s);
 
-main(argc, argv)
+/* entry point */
+int main(int, char **);
+
+int main(argc, argv)
   int argc;
   char **argv;
 {
@@ -93,6 +96,7 @@ main(argc, argv)
     process(s);
     i=scanf("%s", s);
   }
+  return 0;
 }
 
 /*
@@ -123,9 +127,9 @@ void process(char *s)
     setvari(s + 1, pop());
   else if ((s[0] == '*') && (isalpha(s[1])))
     addvari(s + 1);
-  else if (w = lookup(s))
+  else if ((w = lookup(s)))
     dofunc(w);
-  else if (v = getvari(s))
+  else if ((v = getvari(s)))
     push(v->value);
   else
     printf("unknown command '%s'\n", s);
@@ -136,9 +140,8 @@ void process(char *s)
  */
 void procstr(char *s)
 {
-  char *h;
+  char *h = (char *)strdup(s);
   char *g;
-  h = strdup(s);
   g = strtok(h, " ");
   while (g)
   {
@@ -151,7 +154,7 @@ void procstr(char *s)
 /*
  * adds a unique word to the list of words.
  */
-struct word *addword(char *name, char *macro, int fcn)
+struct word *addword(const char *name, const char *macro, int fcn)
 {
   struct word *new;
   for (new = whead; new; new = new->next)
@@ -265,6 +268,7 @@ void makeword()
     i=scanf("%s", t);
   }
   addword(s, y, 0);
+  i=i;
 }
 
 /*
@@ -316,6 +320,7 @@ struct vari *addvari(char *name)
   strcpy(v->name, name);
   v->next = vhead;
   vhead = v;
+  return v;
 }
 
 /*
