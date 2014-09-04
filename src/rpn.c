@@ -15,6 +15,7 @@
  * This work is in the public domain.  See the file UNLICENSE for more info.
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -86,11 +87,11 @@ main(argc, argv)
     for(i=2;i<=argc;i++) procstr(argv[i-1]);
     exit(0);
   }
-  scanf("%s", s);		/* process commands/values from stdin */
+  i=scanf("%s", s);		/* process commands/values from stdin */
   while (!feof(stdin))
   {
     process(s);
-    scanf("%s", s);
+    i=scanf("%s", s);
   }
 }
 
@@ -135,7 +136,7 @@ void process(char *s)
  */
 void procstr(char *s)
 {
-  char *h=(char *)strdup(s);
+  char *h=strdup(s);
   char *g;
   g = strtok(h, " ");
   while (g)
@@ -252,14 +253,15 @@ void makeword()
   char s[80];
   char t[80];
   char y[180];
-  scanf("%s", s);
+  int i;
+  i=scanf("%s", s);
   strcpy(y, "");
-  scanf("%s", t);
+  i=scanf("%s", t);
   while (strcmp(t, ";"))
   {
     strcat(y, t);
     strcat(y, " ");
-    scanf("%s", t);
+    i=scanf("%s", t);
   }
   addword(s, y, 0);
 }

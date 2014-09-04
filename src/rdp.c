@@ -16,6 +16,7 @@
 
 #define THIS_PROGRAM_IS_NOT_REALLY_AS_CRAPPY_AS_YOU_THINK
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
