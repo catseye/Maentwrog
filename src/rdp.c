@@ -42,6 +42,14 @@ int level5 (int result);
 int level6 (int result);
 int primitive (int result);
 
+int isdelimeter (char);
+void gettoken (void);
+void putback (void);
+void serror (int);
+int arith (char, int, int);
+int findvar (char *);
+int getexp (int);
+
 /*-------------------------------------------------------------------------*/
 
 int 
@@ -76,8 +84,6 @@ isdelimeter (char ch)
 void 
 gettoken ()
 {
-  char temp[T_LENGTH];
-
   strcpy (token, "");
   token[1] = (char) 0;
 
@@ -181,6 +187,7 @@ arith (char op, int argument, int operand)
     case '^':
       return (argument ^ operand);	/* binary XOR */
     }
+    exit(1);
 }
 
 int 
@@ -264,7 +271,6 @@ int
 level5 (int result)
 {
   char op;
-  int hold = 0;
 
   op = ' ';
   if ((toktype == T_DELIMITER) && ((token[0] == '+') || (token[0] == '-')))
@@ -312,6 +318,7 @@ primitive (int result)
 int 
 main (int argc, char **argv)
 {
+  argc = argc;
   {
     int c;
     for (c = 0; c <= 25; c++)
