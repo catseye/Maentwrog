@@ -2,6 +2,7 @@
 
 PROGS=bin/maentw bin/caparse bin/rpn bin/rdp
 CC?=gcc
+RM_F?=rm -f
 
 WARNS=	-W -Wall -Wstrict-prototypes -Wmissing-prototypes \
 	-Wpointer-arith	-Wno-uninitialized -Wreturn-type -Wcast-qual \
@@ -22,24 +23,20 @@ endif
 
 all: $(PROGS)
 
-bin/.exists:
-	mkdir -p bin
-	touch bin/.exists
-
-bin/maentw: bin/.exists src/maentw.c
+bin/maentw: src/maentw.c
 	$(CC) $(CFLAGS) src/maentw.c -o bin/maentw
 
-bin/caparse: bin/.exists src/caparse.c
+bin/caparse: src/caparse.c
 	$(CC) $(CFLAGS) src/caparse.c -o bin/caparse
 
-bin/rpn: bin/.exists src/rpn.c
+bin/rpn: src/rpn.c
 	$(CC) $(CFLAGS) src/rpn.c -lm -o bin/rpn
 
-bin/rdp: bin/.exists src/rdp.c
+bin/rdp: src/rdp.c
 	$(CC) $(CFLAGS) src/rdp.c -o bin/rdp
 
 clean:
-	rm -f *.o
+	$(RM_F) src/*.o
 
 distclean:
-	rm -f $(PROGS)
+	$(RM_F) $(PROGS)

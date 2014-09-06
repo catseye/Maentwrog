@@ -125,7 +125,7 @@ void process(char *s)
     push(atof(s));
   else if (s[0] == '=')
     setvari(s + 1, pop());
-  else if ((s[0] == '*') && ((int)isalpha(s[1])))
+  else if ((s[0] == '*') && (isalpha((int)s[1])))
     addvari(s + 1);
   else if ((w = lookup(s)))
     dofunc(w);

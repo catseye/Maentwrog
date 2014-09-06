@@ -107,7 +107,7 @@ gettoken ()
 	      token[strlen (token)] = prog[t++];
 	    }
 	}
-      else if ((int)isdigit (prog[t]))
+      else if (isdigit ((int)prog[t]))
 	{
 	  toktype = T_CONSTANT;
 	  while (!(isdelimeter (prog[t])))
