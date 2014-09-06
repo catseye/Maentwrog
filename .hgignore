@@ -1,3 +1,6 @@
 syntax: glob
 
-bin
+bin/maentw
+bin/caparse
+bin/rpn
+bin/rdp
