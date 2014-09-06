@@ -87,7 +87,7 @@ gettoken ()
   strcpy (token, "");
   token[1] = (char) 0;
 
-  while (isspace (prog[t]))
+  while (isspace ((int)prog[t]))
     t++;
   if (prog[t] == '$')
     strcpy (token, "$");
@@ -98,7 +98,7 @@ gettoken ()
     }
   else
     {
-      if (isalpha (prog[t]))
+      if (isalpha ((int)prog[t]))
 	{
 	  toktype = T_VARIABLE;
 	  while (!(isdelimeter (prog[t])))
@@ -107,7 +107,7 @@ gettoken ()
 	      token[strlen (token)] = prog[t++];
 	    }
 	}
-      else if (isdigit (prog[t]))
+      else if ((int)isdigit (prog[t]))
 	{
 	  toktype = T_CONSTANT;
 	  while (!(isdelimeter (prog[t])))
@@ -193,7 +193,7 @@ arith (char op, int argument, int operand)
 int 
 findvar (char *s)
 {
-  return vars[(int) toupper (s[0]) - (int) 'A'];
+  return vars[(int) toupper ((int)s[0]) - (int) 'A'];
 }
 
 int 

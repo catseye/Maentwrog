@@ -36,7 +36,7 @@ int main(int argc, char **argv)
   while (!feof(stdin))
   {
     fgets(in, 255, stdin);
-    if (isalpha(in[0])&&in[1]=='=')
+    if (isalpha((int)in[0])&&in[1]=='=')
       values[in[0]-'a']=(in[2]-'0');
       else
       printf("%d\n", caparse(in, values));
@@ -56,7 +56,7 @@ int caparse(char *string, int values[])
 
   for (;((sp) && (sp != ')'));pos++)
   {
-    if (isalpha(sp))
+    if (isalpha((int)sp))
     {
       state = doper(state, oper, negate ? !values[sp-'a'] : values[sp-'a']);
       negate = 0;

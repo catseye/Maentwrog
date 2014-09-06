@@ -121,11 +121,11 @@ void process(char *s)
   struct word *w;
   struct vari *v;
 
-  if (isdigit(s[0]) || ((s[0] == '-') && (isdigit(s[1]))))
+  if (isdigit((int)s[0]) || ((s[0] == '-') && (isdigit((int)s[1]))))
     push(atof(s));
   else if (s[0] == '=')
     setvari(s + 1, pop());
-  else if ((s[0] == '*') && (isalpha(s[1])))
+  else if ((s[0] == '*') && ((int)isalpha(s[1])))
     addvari(s + 1);
   else if ((w = lookup(s)))
     dofunc(w);

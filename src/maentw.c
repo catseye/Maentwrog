@@ -135,11 +135,11 @@ void process(char *s)
 
   if(debug) printf("%s ", s);
 
-  if (isdigit(s[0]) || ((s[0] == '-') && (isdigit(s[1]))))
+  if (isdigit((int)s[0]) || (s[0] == '-' && isdigit((int)s[1])))
     push(atoi(s));
   else if (s[0] == '=')
     setvari(s + 1, pop());
-  else if ((s[0] == '*') && (isalpha(s[1])))
+  else if ((s[0] == '*') && (isalpha((int)s[1])))
     addvari(s + 1);
   else if (s[0] == '@')
   {
@@ -185,7 +185,7 @@ void procstr(char *s)
   for (;;)
   {
     gg = g;
-    while (!isspace(gg[0])&&gg[0])
+    while (!isspace((int)gg[0])&&gg[0])
       gg++;
     if (!gg[0])
       break;
@@ -195,7 +195,7 @@ void procstr(char *s)
 
     gg[0] = ' ';
     g = gg;
-    while (isspace(g[0])&&g[0])
+    while (isspace((int)g[0])&&g[0])
       g++;
   }
 
