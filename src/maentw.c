@@ -48,29 +48,30 @@ int debug=0;
 /* prototypes */
 
 /* word-handling */
-struct word *addword(const char *name, const char *macro, int fcn);
-struct word *lookup(char *name);
+struct word *addword(const char *, const char *, int);
+struct word *lookup(const char *);
 void initwords(void);
 void makeword(void);
 
 /* variable-handling */
-struct vari *addvari(char *name);
-struct vari *getvari(char *name);
-void setvari(char *name, signed long value);
+struct vari *addvari(char *);
+struct vari *getvari(char *);
+void setvari(char *, signed long);
 
 /* stack-handling */
-void push(signed long val);
+void push(signed long);
 signed long pop(void);
 
 /* functions */
-void dofunc(struct word * w);
+void dofunc(struct word *);
 void words(void);
 void vars(void);
 signed long sizestack(void);
 
 /* parsing and interpreting */
-void process(char *s);
-void procstr(char *s);
+char *strdupe(const char *);
+void process(char *);
+void procstr(char *);
 
 /* entry point */
 int main(int, char **);
@@ -172,13 +173,20 @@ void process(char *s)
     printf("unknown command '%s'\n", s);
 }
 
+char *strdupe(const char *s)
+{
+  char *t = malloc(strlen(s) + 1);
+  strcpy(t, s);
+  return t;
+}
+
 /*
  * processes each word in the string s.
  * strtok doesn't work with recursion :-(
  */
 void procstr(char *s)
 {
-  char *h=(char *)strdup(s);
+  char *h=strdupe(s);
   char *g, *gg;
   g = h;
 
@@ -199,7 +207,7 @@ void procstr(char *s)
       g++;
   }
 
-  free(h);			/* called with strdup(), so we must free */
+  free(h);			/* called with strdupe(), so we must free */
 }
 
 /*
@@ -216,7 +224,7 @@ struct word *addword(const char *name, const char *macro, int fcn)
     }
   new = (struct word *) malloc(sizeof(struct word));
   strcpy(new->name, name);
-  new->macro = (char *)strdup(macro);
+  new->macro = strdupe(macro);
   new->fcn = fcn;
 
   new->next = whead;
@@ -228,7 +236,7 @@ struct word *addword(const char *name, const char *macro, int fcn)
  * attempts to find the word 'name' in the words list.  returns NULL if it
  * could not be found.
  */
-struct word *lookup(char *name)
+struct word *lookup(const char *name)
 {
   struct word *l = whead;
   struct word *k = NULL;

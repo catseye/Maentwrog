@@ -68,6 +68,7 @@ void words(void);
 void vars(void);
 
 /* parsing and interpreting */
+char *strdupe(const char *);
 void process(char *s);
 void procstr(char *s);
 
@@ -135,12 +136,19 @@ void process(char *s)
     printf("unknown command '%s'\n", s);
 }
 
+char *strdupe(const char *s)
+{
+  char *t = malloc(strlen(s) + 1);
+  strcpy(t, s);
+  return t;
+}
+
 /*
  * processes each word in the string s.
  */
 void procstr(char *s)
 {
-  char *h = (char *)strdup(s);
+  char *h = strdupe(s);
   char *g;
   g = strtok(h, " ");
   while (g)
@@ -148,7 +156,7 @@ void procstr(char *s)
     process(g);
     g = strtok(NULL, " ");
   }
-  free(h);			/* called with strdup(), so we must free */
+  free(h);			/* called with strdupe(), so we must free */
 }
 
 /*

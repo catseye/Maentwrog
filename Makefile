@@ -10,7 +10,7 @@ WARNS=	-W -Wall -Wstrict-prototypes -Wmissing-prototypes \
 	-Winline -Wnested-externs -Wredundant-decls
 
 ifdef ANSI
-  CFLAGS+= -ansi -pedantic -D_BSD_SOURCE
+  CFLAGS+= -ansi -pedantic
 else
   CFLAGS+= -std=c99 -D_POSIX_C_SOURCE=200809L
 endif
