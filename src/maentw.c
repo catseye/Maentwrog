@@ -8,7 +8,7 @@
  * -         and ANSI C-ized: now case sensitive
  * - updated Jul 2010 Chris Pressey, buildability w/gcc & pcc
  * Usage : maentw maentw-expressions   executes and exits
- *         maentw		       goes into interactive mode
+ *         maentw                      goes into interactive mode
  *         maentw <maentwrog-file      runs file through maentw
  *
  * This work is in the public domain.  See the file UNLICENSE for more info.
@@ -21,27 +21,27 @@
 
 #define DEFSIZE 1024
 
-struct stack			/* stack structure, for values on stack */
+struct stack                    /* stack structure, for values on stack */
 {
   signed long val;
   struct stack *next;
-} *head;			/* head of stack */
+} *head;                        /* head of stack */
 
-struct word			/* word structure, for words (pre- and user- */
-{				/* defined) */
-  char name[80];		/* name of word */
-  char *macro;  		/* macro (user-defined; only executed if
-				 * fcn==0) */
-  int fcn;			/* built-in fcn or 0 for user-defined fcn */
+struct word                     /* word structure, for words (pre- and user- */
+{                               /* defined) */
+  char name[80];                /* name of word */
+  char *macro;                  /* macro (user-defined; only executed if
+                                 * fcn==0) */
+  int fcn;                      /* built-in fcn or 0 for user-defined fcn */
   struct word *next;
-} *whead;			/* head of words */
+} *whead;                       /* head of words */
 
-struct vari			/* variable structure, for variables */
+struct vari                     /* variable structure, for variables */
 {
-  char name[80];		/* name of variable */
-  signed long value;			/* values of variable (signed longs only) */
+  char name[80];                /* name of variable */
+  signed long value;                    /* values of variable (signed longs only) */
   struct vari *next;
-} *vhead;			/* head of variables */
+} *vhead;                       /* head of variables */
 
 int debug=0;
 
@@ -83,7 +83,7 @@ int main(argc, argv)
   char s[80];
   int i;
 
-  head = NULL;			/* init */
+  head = NULL;                  /* init */
   whead = NULL;
   vhead = NULL;
   initwords();
@@ -92,7 +92,7 @@ int main(argc, argv)
     for(i=2;i<=argc;i++) procstr(argv[i-1]);
     exit(0);
   }
-  scanf("%s", s);		/* process commands/values from stdin */
+  scanf("%s", s);               /* process commands/values from stdin */
   while (!feof(stdin))
   {
     process(s);
@@ -146,13 +146,13 @@ void process(char *s)
   {
     if (pop())
       if ((w = lookup(s + 1)))
-	dofunc(w);
+        dofunc(w);
   }
   else if (s[0] == '$')
   {
     for(i=pop();i;i--)
       if ((w = lookup(s + 1)))
-	dofunc(w);
+        dofunc(w);
   }
   else if (s[0] == '[')
   {
@@ -160,8 +160,8 @@ void process(char *s)
     {
       if (pop())
       {
-	if ((w = lookup(s + 1)))
-	  dofunc(w);
+        if ((w = lookup(s + 1)))
+          dofunc(w);
       } else break;
     }
   }
@@ -207,7 +207,7 @@ void procstr(char *s)
       g++;
   }
 
-  free(h);			/* called with strdupe(), so we must free */
+  free(h);                      /* called with strdupe(), so we must free */
 }
 
 /*
@@ -465,26 +465,26 @@ void dofunc(struct word * w)
   signed long *ax;
   switch (w->fcn)
   {
-    case 1:			/* output (.) */
+    case 1:                     /* output (.) */
       printf("%ld\n", pop());
       break;
-    case 2:			/* add (+) */
+    case 2:                     /* add (+) */
       push(pop() + pop());
       break;
-    case 3:			/* subtract (-) */
+    case 3:                     /* subtract (-) */
       a = pop();
       b = pop();
       push(b - a);
       break;
-    case 4:			/* multiply (*) */
+    case 4:                     /* multiply (*) */
       push(pop() * pop());
       break;
-    case 5:			/* divide (/) */
+    case 5:                     /* divide (/) */
       a = pop();
       b = pop();
       push(b / a);
       break;
-    case 6:			/* output ASCII (..) */
+    case 6:                     /* output ASCII (..) */
       printf("%c", (char)pop());
       break;
     case 20:
@@ -508,20 +508,20 @@ void dofunc(struct word * w)
       a = pop();
       b = pop();
       if (b % 4)
-	printf("must be longword boundary\n"); else
-	{
-	  ax = (signed long *)b;
-	  *ax = a;
-	}
+        printf("must be longword boundary\n"); else
+        {
+          ax = (signed long *)b;
+          *ax = a;
+        }
       break;
     case 45:
       a = pop();
       if (a % 4)
-	printf("must be longword boundary\n"); else
-	{
-	  ax = (signed long *)a;
-	  push(*ax);
-	}
+        printf("must be longword boundary\n"); else
+        {
+          ax = (signed long *)a;
+          push(*ax);
+        }
       break;
     case 50:
       push(sizestack());        /* size of stack (size) */
@@ -537,10 +537,10 @@ void dofunc(struct word * w)
     case 53:                    /* pop element (pop) */
       pop();
       break;
-    case 80:			/* define word (: ... ;) */
+    case 80:                    /* define word (: ... ;) */
       makeword();
       break;
-    case 81:			/* null (;) */
+    case 81:                    /* null (;) */
       break;
     case 90:
       a = pop();
@@ -549,10 +549,10 @@ void dofunc(struct word * w)
     case 91:
       free((void *)pop());
       break;
-    case 100:			/* list known words (words) */
+    case 100:                   /* list known words (words) */
       words();
       break;
-    case 101:			/* list variables (vars) */
+    case 101:                   /* list variables (vars) */
       vars();
       break;
     case 198:
@@ -563,13 +563,13 @@ void dofunc(struct word * w)
       char t[80];
       scanf("%s", t);
       while (strcmp(t, ";"))
-	scanf("%s", t);
+        scanf("%s", t);
     }
       break;
-    case 200:			/* exit mw (bye) */
+    case 200:                   /* exit mw (bye) */
       exit(0);
       break;
-    default:			/* user-defined word */
+    default:                    /* user-defined word */
       procstr(w->macro);
   }
 }

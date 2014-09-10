@@ -5,9 +5,9 @@
  * 
  * Compilation : acc rpn.c -o rpn
  * 
- * Usage : rpn rpn-expressions		; executes and exits
- *         rpn				; goes into interactive mode
- *         rpn <rpn-file		; runs rpn-file through rpn
+ * Usage : rpn rpn-expressions          ; executes and exits
+ *         rpn                          ; goes into interactive mode
+ *         rpn <rpn-file                ; runs rpn-file through rpn
  * 
  * To do : add size (size stack), sum (sum stack), mean (mean stack), sd (take
  * standard deviation of stack)
@@ -21,27 +21,27 @@
 #include <ctype.h>
 #include <math.h>
 
-struct stack			/* stack structure, for values on stack */
+struct stack                    /* stack structure, for values on stack */
 {
   double val;
   struct stack *next;
-} *head;			/* head of stack */
+} *head;                        /* head of stack */
 
-struct word			/* word structure, for words (pre- and user- */
-{				/* defined) */
-  char name[80];		/* name of word */
-  char macro[80];		/* macro (user-defined; only executed if
-				 * fcn==0) */
-  int fcn;			/* built-in fcn or 0 for user-defined fcn */
+struct word                     /* word structure, for words (pre- and user- */
+{                               /* defined) */
+  char name[80];                /* name of word */
+  char macro[80];               /* macro (user-defined; only executed if
+                                 * fcn==0) */
+  int fcn;                      /* built-in fcn or 0 for user-defined fcn */
   struct word *next;
-} *whead;			/* head of words */
+} *whead;                       /* head of words */
 
-struct vari			/* variable structure, for variables */
+struct vari                     /* variable structure, for variables */
 {
-  char name[80];		/* name of variable */
-  double value;			/* values of variable (doubles only) */
+  char name[80];                /* name of variable */
+  double value;                 /* values of variable (doubles only) */
   struct vari *next;
-} *vhead;			/* head of variables */
+} *vhead;                       /* head of variables */
 
 /* prototypes */
 
@@ -82,7 +82,7 @@ int main(argc, argv)
   char s[80];
   int i;
 
-  head = NULL;			/* init */
+  head = NULL;                  /* init */
   whead = NULL;
   vhead = NULL;
   initwords();
@@ -91,7 +91,7 @@ int main(argc, argv)
     for(i=2;i<=argc;i++) procstr(argv[i-1]);
     exit(0);
   }
-  i=scanf("%s", s);		/* process commands/values from stdin */
+  i=scanf("%s", s);             /* process commands/values from stdin */
   while (!feof(stdin))
   {
     process(s);
@@ -156,7 +156,7 @@ void procstr(char *s)
     process(g);
     g = strtok(NULL, " ");
   }
-  free(h);			/* called with strdupe(), so we must free */
+  free(h);                      /* called with strdupe(), so we must free */
 }
 
 /*
@@ -421,91 +421,91 @@ void dofunc(struct word * w)
   double a, b;
   switch (w->fcn)
   {
-    case 1:			/* output (.) */
+    case 1:                     /* output (.) */
       printf("%f\n", pop());
       break;
-    case 2:			/* add (+) */
+    case 2:                     /* add (+) */
       push(pop() + pop());
       break;
-    case 3:			/* subtract (-) */
+    case 3:                     /* subtract (-) */
       a = pop();
       b = pop();
       push(b - a);
       break;
-    case 4:			/* multiply (*) */
+    case 4:                     /* multiply (*) */
       push(pop() * pop());
       break;
-    case 5:			/* divide (/) */
+    case 5:                     /* divide (/) */
       a = pop();
       b = pop();
       push(b / a);
       break;
-    case 6:			/* exponential (^) */
+    case 6:                     /* exponential (^) */
       a = pop();
       b = pop();
       push(pow(b, a));
       break;
-    case 7:			/* square (sqr) */
+    case 7:                     /* square (sqr) */
       a = pop();
       push(a * a);
       break;
-    case 8:			/* square root (sqrt) */
+    case 8:                     /* square root (sqrt) */
       push(sqrt(pop()));
       break;
-    case 9:			/* natural logarithm (ln) */
+    case 9:                     /* natural logarithm (ln) */
       push(log(pop()));
       break;
-    case 10:			/* log base 10 (log) */
+    case 10:                    /* log base 10 (log) */
       push(log10(pop()));
       break;
-    case 11:			/* e^x (exp) */
+    case 11:                    /* e^x (exp) */
       push(exp(pop()));
       break;
-    case 12:			/* inversion (inv) */
+    case 12:                    /* inversion (inv) */
       push(1.0 / pop());
       break;
-    case 13:			/* factorial (!) */
+    case 13:                    /* factorial (!) */
       push(factorial(pop()));
       break;
-    case 14:			/* fibonacci (fib) */
+    case 14:                    /* fibonacci (fib) */
       push(fibonacci(pop()));
       break;
-    case 20:			/* sine (sin) */
+    case 20:                    /* sine (sin) */
       push(sin(pop()));
       break;
-    case 21:			/* cosine (cos) */
+    case 21:                    /* cosine (cos) */
       push(cos(pop()));
       break;
-    case 22:			/* tangent (tan) */
+    case 22:                    /* tangent (tan) */
       push(tan(pop()));
       break;
-    case 23:			/* arcsine (asin) */
+    case 23:                    /* arcsine (asin) */
       push(asin(pop()));
       break;
-    case 24:			/* arccosine (acos) */
+    case 24:                    /* arccosine (acos) */
       push(acos(pop()));
       break;
-    case 25:			/* arctangent (atan) */
+    case 25:                    /* arctangent (atan) */
       push(atan(pop()));
       break;
-    case 26:			/* pi (pi) */
+    case 26:                    /* pi (pi) */
       push(3.1415926);
       break;
-    case 80:			/* define word (: ... ;) */
+    case 80:                    /* define word (: ... ;) */
       makeword();
       break;
-    case 81:			/* null (;) */
+    case 81:                    /* null (;) */
       break;
-    case 100:			/* list known words (words) */
+    case 100:                   /* list known words (words) */
       words();
       break;
-    case 101:			/* list variables (vars) */
+    case 101:                   /* list variables (vars) */
       vars();
       break;
-    case 200:			/* exit bf (bye) */
+    case 200:                   /* exit bf (bye) */
       exit(0);
       break;
-    default:			/* user-defined word */
+    default:                    /* user-defined word */
       procstr(w->macro);
   }
 }

@@ -21,22 +21,22 @@
 #include <string.h>
 #include <ctype.h>
 
-#define T_DELIMITER     0	/* delimeter token */
+#define T_DELIMITER     0       /* delimeter token */
 #define T_VARIABLE      1
 #define T_CONSTANT      2
 
 #define T_LENGTH        80
 
-int toktype;			/* type of last token */
-char token[T_LENGTH];		/* what gettoken returns - a token */
-char prog[T_LENGTH];		/* the string to parse */
+int toktype;                    /* type of last token */
+char token[T_LENGTH];           /* what gettoken returns - a token */
+char prog[T_LENGTH];            /* the string to parse */
 
-int t;				/* a 'pointer' to the pos in prog[] */
-int result;			/* result of calculations */
-int vars[26];			/* variables */
+int t;                          /* a 'pointer' to the pos in prog[] */
+int result;                     /* result of calculations */
+int vars[26];                   /* variables */
 
-int level2 (int result);	/* recursion levels.  level 1 is no */
-int level3 (int result);	/* longer needed (it assigned vars) */
+int level2 (int result);        /* recursion levels.  level 1 is no */
+int level3 (int result);        /* longer needed (it assigned vars) */
 int level4 (int result);
 int level5 (int result);
 int level6 (int result);
@@ -99,23 +99,23 @@ gettoken ()
   else
     {
       if (isalpha ((int)prog[t]))
-	{
-	  toktype = T_VARIABLE;
-	  while (!(isdelimeter (prog[t])))
-	    {
-	      token[strlen (token) + 1] = (char) 0;
-	      token[strlen (token)] = prog[t++];
-	    }
-	}
+        {
+          toktype = T_VARIABLE;
+          while (!(isdelimeter (prog[t])))
+            {
+              token[strlen (token) + 1] = (char) 0;
+              token[strlen (token)] = prog[t++];
+            }
+        }
       else if (isdigit ((int)prog[t]))
-	{
-	  toktype = T_CONSTANT;
-	  while (!(isdelimeter (prog[t])))
-	    {
-	      token[strlen (token) + 1] = (char) 0;
-	      token[strlen (token)] = prog[t++];
-	    }
-	}
+        {
+          toktype = T_CONSTANT;
+          while (!(isdelimeter (prog[t])))
+            {
+              token[strlen (token) + 1] = (char) 0;
+              token[strlen (token)] = prog[t++];
+            }
+        }
     }
 }
 
@@ -165,27 +165,27 @@ arith (char op, int argument, int operand)
   switch (op)
     {
     case '+':
-      return (argument + operand);	/* addition */
+      return (argument + operand);      /* addition */
     case '-':
-      return (argument - operand);	/* subtraction */
+      return (argument - operand);      /* subtraction */
     case '*':
-      return (argument * operand);	/* multiplication */
+      return (argument * operand);      /* multiplication */
     case '/':
-      return (argument / operand);	/* division */
+      return (argument / operand);      /* division */
     case '%':
-      return (argument % operand);	/* modulus */
+      return (argument % operand);      /* modulus */
     case '=':
-      return (argument == operand);	/* equality */
+      return (argument == operand);     /* equality */
     case '>':
-      return (argument > operand);	/* superiority */
+      return (argument > operand);      /* superiority */
     case '<':
-      return (argument < operand);	/* inferiority */
+      return (argument < operand);      /* inferiority */
     case '&':
-      return (argument & operand);	/* binary AND */
+      return (argument & operand);      /* binary AND */
     case '|':
-      return (argument | operand);	/* binary OR */
+      return (argument | operand);      /* binary OR */
     case '^':
-      return (argument ^ operand);	/* binary XOR */
+      return (argument ^ operand);      /* binary XOR */
     }
     exit(1);
 }
@@ -294,7 +294,7 @@ level6 (int result)
       gettoken ();
       result = level2 (result);
       if (token[0] != ')')
-	serror (2);
+        serror (2);
       gettoken ();
     }
   else
