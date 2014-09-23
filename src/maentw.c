@@ -7,6 +7,7 @@
  * - updated Jul 1998 Chris Pressey, fixed more minor bugs
  * -         and ANSI C-ized: now case sensitive
  * - updated Jul 2010 Chris Pressey, buildability w/gcc & pcc
+ * - updated Sep 2014 Chris Pressey, buildability and warnings avoidance
  * Usage : maentw maentw-expressions   executes and exits
  *         maentw                      goes into interactive mode
  *         maentw <maentwrog-file      runs file through maentw
