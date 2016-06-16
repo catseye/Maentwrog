@@ -1,0 +1,4 @@
+dcc src/maentw.c -o bin/maentw
+dcc src/caparse.c -o bin/caparse
+;dcc -ffp src/rpn.c -o bin/rpn
+dcc src/rdp.c -o bin/rdp
