@@ -1,19 +1,6 @@
 The Maentwrog Programming Language
 ==================================
 
-This is the reference distribution for the Maentwrog programming language,
-designed and implemented in 1993.
-
-This distribution contains the reference interpreter, written in ANSI C, a
-rudimentary specification (below) and some example Maentwrog programs.  It also
-contains a few other miscellaneous contemporaneous C programs by the author.
-
-The current released version of the Maentwrog distribution is
-version 1.1 revision 2014.0923.
-
-Specification
--------------
-
 This is a rudimentary specification for the Maentwrog programming
 language.
 
