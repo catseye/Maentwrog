@@ -17,4 +17,4 @@ User:Marinus.  Thanks Marinus!
 All of these materials are in the public domain.
 
 The current released version of the Maentwrog distribution is
-version 1.1 revision 2018.06??.
+version 1.1 revision 2018.0608.
